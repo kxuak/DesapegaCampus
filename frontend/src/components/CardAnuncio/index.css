@@ -1,0 +1,90 @@
+.card-anuncio {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.card-anuncio-imagem {
+  height: 140px;
+  background: var(--img-placeholder);
+  position: relative;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.card-anuncio-foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-anuncio-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.card-anuncio-body {
+  padding: 16px;
+}
+
+.card-anuncio-titulo {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-anuncio-preco {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 14px;
+}
+
+.card-anuncio-preco.doacao {
+  color: var(--green);
+}
+
+.card-anuncio-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.card-anuncio-tempo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-mute);
+}
+
+.card-anuncio-salvar {
+  background: transparent;
+  border: none;
+  color: var(--text-mute);
+  padding: 4px;
+  display: flex;
+  border-radius: 6px;
+}
+
+.card-anuncio-salvar:hover {
+  color: var(--primary);
+}

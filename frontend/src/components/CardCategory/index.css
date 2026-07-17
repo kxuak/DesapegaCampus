@@ -1,0 +1,46 @@
+.card-category {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.card-category:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.card-category-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-category-label {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.card-category-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-mute);
+}
+
+.card-category.card-category-all {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-color: var(--primary);
+  gap: 4px;
+}

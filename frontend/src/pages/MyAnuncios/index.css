@@ -1,0 +1,57 @@
+.my-anuncios-page { padding: 32px 24px 64px; }
+
+.voltar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+.voltar-link:hover { color: var(--text); }
+
+.my-anuncios-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.my-anuncios-header h1 { font-size: 30px; font-weight: 800; margin-bottom: 6px; }
+.my-anuncios-header p { color: var(--text-dim); }
+
+.my-anuncios-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.my-anuncios-grid > * { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.my-anuncios-grid > *:nth-child(4n+1) { animation-delay: 0.03s; }
+.my-anuncios-grid > *:nth-child(4n+2) { animation-delay: 0.09s; }
+.my-anuncios-grid > *:nth-child(4n+3) { animation-delay: 0.15s; }
+.my-anuncios-grid > *:nth-child(4n+4) { animation-delay: 0.21s; }
+
+.my-anuncios-empty {
+  text-align: center;
+  padding: 60px 20px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-dim);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .my-anuncios-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .my-anuncios-page { padding: 24px 20px 48px; }
+  .my-anuncios-header h1 { font-size: 24px; }
+  .my-anuncios-header .btn { width: 100%; justify-content: center; }
+  .my-anuncios-grid { grid-template-columns: 1fr; }
+}
