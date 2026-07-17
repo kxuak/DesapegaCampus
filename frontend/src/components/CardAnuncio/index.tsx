@@ -15,7 +15,7 @@ const CardAnuncio = ({ anuncio, onSalvar }: CardAnuncioProps) => {
     anuncio.preco === null ? "Doação" : `R$ ${anuncio.preco.toFixed(2).replace(".", ",")}`;
 
   const [imagemFalhou, setImagemFalhou] = useState(false);
-  // Sem foto real ainda: usa uma imagem genérica estável (mesma sempre para o mesmo anúncio).
+  
   const imagemSrc = anuncio.imagem ?? `https://picsum.photos/seed/${anuncio.id}/400/300`;
 
   return (
