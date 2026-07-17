@@ -5,8 +5,8 @@ import { useTheme } from "../../context/ThemeContext";
 import "./index.css";
 
 // 👉 TROQUE AQUI pelos seus links reais
-const INSTAGRAM_URL = "https://www.instagram.com/vortexunifor/";
-const PORTFOLIO_URL = "https://kauadaniel-portifolio.vercel.app/";
+const INSTAGRAM_URL = "https://instagram.com/seu_usuario";
+const PORTFOLIO_URL = "https://seuportfolio.com";
 
 const AppLayout = () => {
   const { theme, toggleTheme } = useTheme();

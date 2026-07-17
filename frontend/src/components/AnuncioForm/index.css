@@ -16,9 +16,10 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 40px 16px;
+  padding: 104px 16px 40px;
   overflow-y: auto;
-  z-index: 100;
+  z-index: 300;
+  isolation: isolate;
   animation: modal-overlay-in 0.3s ease-out both;
 }
 
@@ -28,6 +29,8 @@
   border-radius: var(--radius-lg);
   width: 100%;
   max-width: 520px;
+  max-height: 100%;
+  overflow-y: auto;
   padding: 28px;
   animation: modal-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -168,8 +171,12 @@
 }
 
 @media (max-width: 560px) {
-  .modal-overlay { padding: 0; align-items: stretch; }
-  .modal { max-width: none; min-height: 100%; border-radius: 0; border: none; padding: 20px 20px 28px; }
+  .modal-overlay { padding: 76px 12px 20px; align-items: flex-start; }
+  .modal { max-width: none; max-height: calc(100vh - 96px); padding: 20px; }
   .field-row { grid-template-columns: 1fr; gap: 16px; }
   .modal-actions { flex-direction: column-reverse; }
+}
+
+@media (max-width: 400px) {
+  .modal-overlay { padding: 72px 8px 16px; }
 }

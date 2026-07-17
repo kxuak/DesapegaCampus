@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Icon from "../Icon";
 import { CATEGORIES } from "../../data/categories";
 import "./index.css";
@@ -35,6 +35,15 @@ const initialState: AnuncioFormData = {
 
 const AnuncioForm = ({ open, onClose, onSubmit }: AnuncioFormProps) => {
   const [form, setForm] = useState<AnuncioFormData>(initialState);
+
+  useEffect(() => {
+    if (!open) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [open]);
 
   if (!open) return null;
 

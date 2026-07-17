@@ -1,4 +1,4 @@
-.section { padding: 64px 0; }
+.section { padding-top: 64px; padding-bottom: 64px; }
 .section-alt { background: var(--bg-alt); }
 
 .hero {
@@ -163,7 +163,7 @@
 
 @media (max-width: 560px) {
   .categorias-grid, .beneficios-grid, .vitrine-grid { grid-template-columns: 1fr; }
-  .section { padding: 44px 0; }
+  .section { padding-top: 44px; padding-bottom: 44px; }
   .section-title { font-size: 24px; }
   .hero h1 { font-size: 28px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
