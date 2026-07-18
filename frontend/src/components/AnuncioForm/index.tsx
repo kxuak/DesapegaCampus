@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import Icon from "../Icon";
 import { CATEGORIES } from "../../data/categories";
 import type { Anuncio } from "../../data/anuncios";
@@ -75,7 +76,7 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormPr
     setForm(initialState);
   };
 
-  return (
+  return createPortal(
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
@@ -169,6 +170,10 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormPr
               placeholder="WhatsApp, email ou @instagram"
               value={form.contato}
               onChange={(e) => update("contato", e.target.value)}
+              autoComplete="off"
+              autoCapitalize="off"
+              autoCorrect="off"
+              name="contato-anuncio"
             />
           </label>
 
@@ -188,7 +193,8 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormPr
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
