@@ -6,6 +6,7 @@
   --surface: #111726;
   --surface-2: #151d30;
   --border: #232b3d;
+  --border-hover: #3a4459;
   --text: #f8fafc;
   --text-dim: #94a3b8;
   --text-mute: #64748b;
@@ -34,7 +35,8 @@ body.light {
   --bg-alt: #eef2ff;
   --surface: #ffffff;
   --surface-2: #f1f5f9;
-  --border: #e2e8f0;
+  --border: #cbd5e1;
+  --border-hover: #94a3b8;
   --text: #0f172a;
   --text-dim: #475569;
   --text-mute: #64748b;
@@ -42,7 +44,7 @@ body.light {
   --primary-hover: #1d54c9;
   --primary-soft: rgba(47, 111, 237, 0.08);
   --img-placeholder: #0f1420;
-  --shadow-card: 0 1px 2px rgba(15,23,42,0.06);
+  --shadow-card: 0 1px 3px rgba(15,23,42,0.08);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

@@ -4,6 +4,19 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card-anuncio:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.card-anuncio:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .card-anuncio-imagem {
@@ -20,6 +33,39 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.card-anuncio-acoes {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+}
+
+.card-anuncio-acao {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.card-anuncio-acao:hover {
+  transform: translateY(-1px);
+  background: #fff;
+}
+
+.card-anuncio-acao-excluir:hover {
+  background: #fca5a5;
+  color: #7f1d1d;
 }
 
 .card-anuncio-badge {
@@ -87,4 +133,5 @@
 
 .card-anuncio-salvar:hover {
   color: var(--primary);
+  background: var(--primary-soft);
 }

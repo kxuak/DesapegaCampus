@@ -4,7 +4,6 @@ import Icon from "../../components/Icon";
 import { useTheme } from "../../context/ThemeContext";
 import "./index.css";
 
-// 👉 TROQUE AQUI pelos seus links reais
 const INSTAGRAM_URL = "https://www.instagram.com/vortexunifor/";
 const PORTFOLIO_URL = "https://kauadaniel-portifolio.vercel.app/";
 
@@ -22,7 +21,7 @@ const AppLayout = () => {
       <header className="navbar">
         <div className="container navbar-inner">
           <Link to="/home" className="navbar-brand" onClick={() => setMenuAberto(false)}>
-            <span className="navbar-logo" />
+            <span className="navbar-logo"> <img src="./logo2.png" /></span>
             <span>
               Desapega
               <small>CAMPUS</small>

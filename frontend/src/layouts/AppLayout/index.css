@@ -43,7 +43,18 @@ main { flex: 1; }
   width: 34px;
   height: 34px;
   border-radius: 9px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--primary);
+  flex-shrink: 0;
+}
+
+.navbar-logo img {
+  width: 90%;
+  height: 90%;
+  object-fit: cover; 
 }
 
 .navbar-nav {
@@ -64,7 +75,7 @@ main { flex: 1; }
   color: var(--text-dim);
 }
 
-.navbar-link:hover { color: var(--text); }
+.navbar-link:hover { color: var(--text); background: var(--surface-2); }
 
 .navbar-link.active {
   background: var(--surface-2);
@@ -89,7 +100,7 @@ main { flex: 1; }
   justify-content: center;
 }
 
-.theme-toggle:hover { border-color: var(--primary); }
+.theme-toggle:hover { border-color: var(--primary); background: var(--surface-2); }
 
 .footer {
   border-top: 1px solid var(--border);
@@ -118,7 +129,12 @@ main { flex: 1; }
   transition: border-color 0.15s ease;
 }
 
-.footer-brand:hover { border-color: var(--primary); }
+.footer-brand:hover { 
+  border-color: var(--cat-mobiliario);
+  box-shadow:
+        0 0 10px rgba(139,92,246,.4),
+        0 0 30px rgba(139,92,246,.2); 
+}
 
 .footer-vortex-icon {
   width: 24px;

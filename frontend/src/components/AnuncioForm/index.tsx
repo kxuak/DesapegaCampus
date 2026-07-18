@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import Icon from "../Icon";
 import { CATEGORIES } from "../../data/categories";
+import type { Anuncio } from "../../data/anuncios";
 import "./index.css";
 
 export interface AnuncioFormData {
@@ -18,6 +19,7 @@ interface AnuncioFormProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (data: AnuncioFormData) => void;
+  anuncioEditando?: Anuncio | null;
 }
 
 const CONDICOES = ["Novo", "Seminovo", "Usado"];
@@ -33,8 +35,25 @@ const initialState: AnuncioFormData = {
   imagem: "",
 };
 
-const AnuncioForm = ({ open, onClose, onSubmit }: AnuncioFormProps) => {
+const paraFormData = (anuncio: Anuncio): AnuncioFormData => ({
+  titulo: anuncio.titulo,
+  descricao: anuncio.descricao ?? "",
+  categoria: anuncio.categoria,
+  condicao: anuncio.condicao ?? CONDICOES[1],
+  doacao: anuncio.preco === null,
+  preco: anuncio.preco === null ? "" : String(anuncio.preco),
+  contato: anuncio.contato ?? "",
+  imagem: anuncio.imagem ?? "",
+});
+
+const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormProps) => {
   const [form, setForm] = useState<AnuncioFormData>(initialState);
+  const editando = Boolean(anuncioEditando);
+
+  useEffect(() => {
+    if (!open) return;
+    setForm(anuncioEditando ? paraFormData(anuncioEditando) : initialState);
+  }, [open, anuncioEditando]);
 
   useEffect(() => {
     if (!open) return;
@@ -61,8 +80,8 @@ const AnuncioForm = ({ open, onClose, onSubmit }: AnuncioFormProps) => {
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <h2>Anunciar novo item</h2>
-            <p>Preencha os dados do item que deseja doar ou vender.</p>
+            <h2>{editando ? "Editar anúncio" : "Anunciar novo item"}</h2>
+            <p>{editando ? "Atualize os dados do seu anúncio." : "Preencha os dados do item que deseja doar ou vender."}</p>
           </div>
           <button type="button" className="modal-close" onClick={onClose} aria-label="Fechar">
             ×
@@ -164,7 +183,7 @@ const AnuncioForm = ({ open, onClose, onSubmit }: AnuncioFormProps) => {
           </label>
 
           <div className="modal-actions">
-            <button type="submit" className="btn btn-primary btn-block">Publicar anúncio</button>
+            <button type="submit" className="btn btn-primary btn-block">{editando ? "Salvar alterações" : "Publicar anúncio"}</button>
             <button type="button" className="btn btn-outline btn-block" onClick={onClose}>Cancelar</button>
           </div>
         </form>

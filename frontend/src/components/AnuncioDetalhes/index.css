@@ -1,0 +1,162 @@
+@keyframes anuncio-detalhes-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes anuncio-detalhes-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.anuncio-detalhes-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 16, 0.65);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 104px 16px 40px;
+  overflow-y: auto;
+  z-index: 300;
+  isolation: isolate;
+  animation: anuncio-detalhes-overlay-in 0.3s ease-out both;
+}
+
+.anuncio-detalhes-modal {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  max-height: 100%;
+  overflow-y: auto;
+  animation: anuncio-detalhes-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anuncio-detalhes-overlay, .anuncio-detalhes-modal { animation: none; }
+}
+
+.anuncio-detalhes-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  font-size: 20px;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.anuncio-detalhes-close:hover {
+  transform: translateY(-1px);
+  background: #fff;
+}
+
+.anuncio-detalhes-imagem {
+  position: relative;
+  height: 220px;
+  background: var(--img-placeholder);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+}
+
+.anuncio-detalhes-foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.anuncio-detalhes-badge {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.anuncio-detalhes-body {
+  padding: 24px 28px 28px;
+}
+
+.anuncio-detalhes-header h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.anuncio-detalhes-preco {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.anuncio-detalhes-preco.doacao {
+  color: var(--green);
+}
+
+.anuncio-detalhes-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 16px 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.anuncio-detalhes-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.anuncio-detalhes-secao {
+  margin-bottom: 20px;
+}
+
+.anuncio-detalhes-secao h3 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-mute);
+  margin-bottom: 8px;
+}
+
+.anuncio-detalhes-secao p {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.anuncio-detalhes-contato {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text);
+}
