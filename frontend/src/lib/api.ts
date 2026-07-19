@@ -48,7 +48,9 @@ interface ListProductsParams {
   limit?: number;
 }
 
-function buildQuery(params: Record<string, string | number | undefined>): string {
+function buildQuery(
+  params: Record<string, string | number | undefined> | ListProductsParams
+): string {
   const query = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
