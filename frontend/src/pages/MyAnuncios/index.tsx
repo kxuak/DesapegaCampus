@@ -5,9 +5,9 @@ import CardAnuncio from "../../components/CardAnuncio";
 import AnuncioForm, { type AnuncioFormData } from "../../components/AnuncioForm";
 import { createProduct, deleteProduct, listMyProducts, toAnuncio, updateProduct, type ProductPayload } from "../../lib/api";
 import { getOwnerId } from "../../lib/ownerId";
-import { salvarNome } from "../../lib/preferences";
 import type { Anuncio } from "../../data/anuncios";
 import "./index.css";
+
 
 const paraPayload = (data: AnuncioFormData, ownerId: string): ProductPayload => ({
   title: data.titulo,
@@ -17,7 +17,6 @@ const paraPayload = (data: AnuncioFormData, ownerId: string): ProductPayload => 
   isDonation: data.doacao,
   price: !data.doacao && data.preco !== "" ? Number(data.preco) : undefined,
   image: data.imagem || undefined,
-  sellerName: data.nome,
   contact: data.contato || undefined,
   ownerId,
 });
@@ -90,7 +89,6 @@ const MyAnuncios = () => {
         setMeusAnuncios((prev) => [toAnuncio(criado), ...prev]);
       }
 
-      salvarNome(data.nome);
       fecharForm();
     } catch (err) {
       setErroForm(err instanceof Error ? err.message : "Não foi possível salvar o anúncio.");

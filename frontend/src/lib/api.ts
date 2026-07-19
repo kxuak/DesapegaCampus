@@ -12,7 +12,6 @@ export interface ApiProduct {
   price: number | null;
   isDonation: boolean;
   image: string | null;
-  sellerName: string;
   contact: string | null;
   ownerId: string;
   createdAt: string;
@@ -36,7 +35,6 @@ export interface ProductPayload {
   price?: number;
   isDonation?: boolean;
   image?: string;
-  sellerName: string;
   contact?: string;
   ownerId: string;
 }
@@ -124,6 +122,5 @@ export function toAnuncio(product: ApiProduct): Anuncio {
     descricao: product.description,
     condicao: product.condition ?? undefined,
     contato: product.contact ?? undefined,
-    vendedor: product.sellerName,
   };
 }

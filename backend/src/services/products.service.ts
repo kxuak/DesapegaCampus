@@ -14,7 +14,6 @@ function serialize(row: ProductRecord) {
     price: row.price,
     isDonation: !!row.is_donation,
     image: row.image,
-    sellerName: row.seller_name,
     contact: row.contact,
     ownerId: row.owner_id,
     createdAt: row.created_at,
@@ -26,8 +25,8 @@ export function createProduct(data: CreateProductInput) {
   const price = data.isDonation ? null : data.price ?? null;
 
   db.run(
-    `INSERT INTO products (id, title, description, category, "condition", price, is_donation, image, seller_name, contact, owner_id)
-     VALUES (:id, :title, :description, :category, :condition, :price, :is_donation, :image, :seller_name, :contact, :owner_id)`,
+    `INSERT INTO products (id, title, description, category, "condition", price, is_donation, image, contact, owner_id)
+     VALUES (:id, :title, :description, :category, :condition, :price, :is_donation, :image, :contact, :owner_id)`,
     {
       ":id": id,
       ":title": data.title,
@@ -37,7 +36,6 @@ export function createProduct(data: CreateProductInput) {
       ":price": price,
       ":is_donation": data.isDonation ? 1 : 0,
       ":image": data.image ?? null,
-      ":seller_name": data.sellerName,
       ":contact": data.contact ?? null,
       ":owner_id": data.ownerId,
     }
@@ -138,7 +136,6 @@ export function updateProduct(id: string, data: UpdateProductInput) {
          price = :price,
          is_donation = :is_donation,
          image = :image,
-         seller_name = :seller_name,
          contact = :contact
      WHERE id = :id`,
     {
@@ -150,7 +147,6 @@ export function updateProduct(id: string, data: UpdateProductInput) {
       ":price": price,
       ":is_donation": data.isDonation ? 1 : 0,
       ":image": data.image ?? null,
-      ":seller_name": data.sellerName,
       ":contact": data.contact ?? null,
     }
   );

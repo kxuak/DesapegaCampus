@@ -8,7 +8,6 @@ const baseProductFields = {
   price: z.number().positive("Preço deve ser maior que zero.").optional(),
   isDonation: z.boolean().optional().default(false),
   image: z.string().url("URL de imagem inválida.").optional(),
-  sellerName: z.string().min(2, "Informe seu nome."),
   contact: z.string().min(3, "Informe um contato (e-mail, telefone, @ do Instagram etc).").optional(),
 };
 

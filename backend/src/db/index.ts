@@ -38,8 +38,13 @@ export async function initDb() {
 
   const columns = sqlDb.exec("PRAGMA table_info(products)");
   const columnNames = columns[0]?.values.map((row) => row[1]) ?? [];
+
   if (!columnNames.includes("condition")) {
     sqlDb.run("ALTER TABLE products ADD COLUMN condition TEXT");
+  }
+
+  if (columnNames.includes("seller_name")) {
+    sqlDb.run("ALTER TABLE products DROP COLUMN seller_name");
   }
 
   persist();

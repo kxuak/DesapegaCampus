@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS products (
   price       REAL,
   is_donation INTEGER NOT NULL DEFAULT 0,
   image       TEXT,
-  seller_name TEXT NOT NULL,
   contact     TEXT,
   owner_id    TEXT NOT NULL,
   created_at  TEXT NOT NULL DEFAULT (datetime('now'))

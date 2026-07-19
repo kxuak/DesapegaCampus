@@ -2,7 +2,6 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
 import Icon from "../Icon";
 import { CATEGORIES } from "../../data/categories";
-import { getNomeSalvo } from "../../lib/preferences";
 import type { Anuncio } from "../../data/anuncios";
 import "./index.css";
 
@@ -15,7 +14,6 @@ export interface AnuncioFormData {
   preco: string;
   contato: string;
   imagem: string;
-  nome: string;
 }
 
 interface AnuncioFormProps {
@@ -29,7 +27,7 @@ interface AnuncioFormProps {
 
 const CONDICOES = ["Novo", "Seminovo", "Usado"];
 
-const criarEstadoInicial = (): AnuncioFormData => ({
+const initialState: AnuncioFormData = {
   titulo: "",
   descricao: "",
   categoria: CATEGORIES[0].id,
@@ -38,8 +36,7 @@ const criarEstadoInicial = (): AnuncioFormData => ({
   preco: "",
   contato: "",
   imagem: "",
-  nome: getNomeSalvo(),
-});
+};
 
 const paraFormData = (anuncio: Anuncio): AnuncioFormData => ({
   titulo: anuncio.titulo,
@@ -50,16 +47,15 @@ const paraFormData = (anuncio: Anuncio): AnuncioFormData => ({
   preco: anuncio.preco === null ? "" : String(anuncio.preco),
   contato: anuncio.contato ?? "",
   imagem: anuncio.imagem ?? "",
-  nome: anuncio.vendedor ?? getNomeSalvo(),
 });
 
 const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando, submitting, errorMessage }: AnuncioFormProps) => {
-  const [form, setForm] = useState<AnuncioFormData>(criarEstadoInicial);
+  const [form, setForm] = useState<AnuncioFormData>(initialState);
   const editando = Boolean(anuncioEditando);
 
   useEffect(() => {
     if (!open) return;
-    setForm(anuncioEditando ? paraFormData(anuncioEditando) : criarEstadoInicial());
+    setForm(anuncioEditando ? paraFormData(anuncioEditando) : initialState);
   }, [open, anuncioEditando]);
 
   useEffect(() => {
@@ -169,18 +165,6 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando, submitting, err
               />
             </label>
           )}
-
-          <label className="field">
-            <span>Seu nome</span>
-            <input
-              type="text"
-              placeholder="Como quer ser identificado no anúncio"
-              value={form.nome}
-              onChange={(e) => update("nome", e.target.value)}
-              required
-              minLength={2}
-            />
-          </label>
 
           <label className="field">
             <span>Contato</span>

@@ -8,5 +8,4 @@ export interface Anuncio {
   descricao?: string;
   condicao?: string;
   contato?: string;
-  vendedor?: string;
 }
