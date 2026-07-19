@@ -16,7 +16,8 @@ const AnuncioDetalhes = ({ anuncio, onClose }: AnuncioDetalhesProps) => {
     anuncio.preco === null ? "Doação" : `R$ ${anuncio.preco.toFixed(2).replace(".", ",")}`;
 
   const [imagemFalhou, setImagemFalhou] = useState(false);
-  const imagemSrc = anuncio.imagem ?? `https://picsum.photos/seed/${anuncio.id}/600/400`;
+  
+  const imagemSrc = anuncio.imagem;
 
   useEffect(() => {
     const original = document.body.style.overflow;
@@ -40,7 +41,7 @@ const AnuncioDetalhes = ({ anuncio, onClose }: AnuncioDetalhesProps) => {
         </button>
 
         <div className="anuncio-detalhes-imagem">
-          {!imagemFalhou && (
+          {imagemSrc && !imagemFalhou && (
             <img
               src={imagemSrc}
               alt={anuncio.titulo}

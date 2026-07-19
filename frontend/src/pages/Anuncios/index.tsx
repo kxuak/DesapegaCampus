@@ -1,23 +1,37 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Icon from "../../components/Icon";
 import CategoryButton from "../../components/CategoryButton";
 import CardAnuncio from "../../components/CardAnuncio";
 import { CATEGORIES } from "../../data/categories";
-import { ANUNCIOS } from "../../data/anuncios";
+import { listProducts, toAnuncio } from "../../lib/api";
+import type { Anuncio } from "../../data/anuncios";
 import "./index.css";
 
 const Anuncios = () => {
   const [searchParams] = useSearchParams();
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState(searchParams.get("categoria") ?? "todos");
+  const [resultados, setResultados] = useState<Anuncio[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState<string | null>(null);
 
-  const resultados = useMemo(() => {
-    return ANUNCIOS.filter((a) => {
-      const matchCategoria = categoria === "todos" || a.categoria === categoria;
-      const matchBusca = a.titulo.toLowerCase().includes(busca.toLowerCase());
-      return matchCategoria && matchBusca;
-    });
+  useEffect(() => {
+    setCarregando(true);
+    setErro(null);
+
+    const timeout = setTimeout(() => {
+      listProducts({
+        category: categoria === "todos" ? undefined : categoria,
+        search: busca || undefined,
+        limit: 60,
+      })
+        .then((resposta) => setResultados(resposta.items.map(toAnuncio)))
+        .catch((err) => setErro(err instanceof Error ? err.message : "Não foi possível carregar os anúncios."))
+        .finally(() => setCarregando(false));
+    }, 300);
+
+    return () => clearTimeout(timeout);
   }, [busca, categoria]);
 
   return (
@@ -46,12 +60,18 @@ const Anuncios = () => {
         ))}
       </div>
 
-      <div className="anuncios-grid">
-        {resultados.map((a) => (
-          <CardAnuncio key={a.id} anuncio={a} />
-        ))}
-        {resultados.length === 0 && <p className="anuncios-empty">Nenhum anúncio encontrado.</p>}
-      </div>
+      {carregando && <p className="anuncios-empty">Carregando anúncios...</p>}
+
+      {!carregando && erro && <p className="anuncios-empty">{erro}</p>}
+
+      {!carregando && !erro && (
+        <div className="anuncios-grid">
+          {resultados.map((a) => (
+            <CardAnuncio key={a.id} anuncio={a} />
+          ))}
+          {resultados.length === 0 && <p className="anuncios-empty">Nenhum anúncio encontrado.</p>}
+        </div>
+      )}
     </div>
   );
 };

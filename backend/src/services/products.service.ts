@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import * as db from "../db";
 import { AppError } from "../types/AppError";
 import { ProductRecord } from "../types/models";
-import { CreateProductInput, ListProductsQuery } from "../types/products.schema";
+import { CreateProductInput, ListProductsQuery, UpdateProductInput } from "../types/products.schema";
 
 function serialize(row: ProductRecord) {
   return {
@@ -10,6 +10,7 @@ function serialize(row: ProductRecord) {
     title: row.title,
     description: row.description,
     category: row.category,
+    condition: row.condition,
     price: row.price,
     isDonation: !!row.is_donation,
     image: row.image,
@@ -25,13 +26,14 @@ export function createProduct(data: CreateProductInput) {
   const price = data.isDonation ? null : data.price ?? null;
 
   db.run(
-    `INSERT INTO products (id, title, description, category, price, is_donation, image, seller_name, contact, owner_id)
-     VALUES (:id, :title, :description, :category, :price, :is_donation, :image, :seller_name, :contact, :owner_id)`,
+    `INSERT INTO products (id, title, description, category, "condition", price, is_donation, image, seller_name, contact, owner_id)
+     VALUES (:id, :title, :description, :category, :condition, :price, :is_donation, :image, :seller_name, :contact, :owner_id)`,
     {
       ":id": id,
       ":title": data.title,
       ":description": data.description,
       ":category": data.category,
+      ":condition": data.condition ?? null,
       ":price": price,
       ":is_donation": data.isDonation ? 1 : 0,
       ":image": data.image ?? null,
@@ -110,6 +112,54 @@ export function listMyProducts(ownerId: string) {
   );
 
   return items.map(serialize);
+}
+
+export function updateProduct(id: string, data: UpdateProductInput) {
+  const product = db.get<ProductRecord>("SELECT * FROM products WHERE id = :id", {
+    ":id": id,
+  });
+
+  if (!product) {
+    throw new AppError("Anúncio não encontrado.", 404);
+  }
+
+  if (product.owner_id !== data.ownerId) {
+    throw new AppError("Você não tem permissão para editar este anúncio.", 403);
+  }
+
+  const price = data.isDonation ? null : data.price ?? null;
+
+  db.run(
+    `UPDATE products
+     SET title = :title,
+         description = :description,
+         category = :category,
+         "condition" = :condition,
+         price = :price,
+         is_donation = :is_donation,
+         image = :image,
+         seller_name = :seller_name,
+         contact = :contact
+     WHERE id = :id`,
+    {
+      ":id": id,
+      ":title": data.title,
+      ":description": data.description,
+      ":category": data.category,
+      ":condition": data.condition ?? null,
+      ":price": price,
+      ":is_donation": data.isDonation ? 1 : 0,
+      ":image": data.image ?? null,
+      ":seller_name": data.sellerName,
+      ":contact": data.contact ?? null,
+    }
+  );
+
+  const updated = db.get<ProductRecord>("SELECT * FROM products WHERE id = :id", {
+    ":id": id,
+  })!;
+
+  return serialize(updated);
 }
 
 export function deleteProduct(id: string, ownerId: string) {

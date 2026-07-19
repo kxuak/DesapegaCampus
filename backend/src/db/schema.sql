@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS products (
   title       TEXT NOT NULL,
   description TEXT NOT NULL,
   category    TEXT NOT NULL,
+  condition   TEXT,
   price       REAL,
   is_donation INTEGER NOT NULL DEFAULT 0,
   image       TEXT,

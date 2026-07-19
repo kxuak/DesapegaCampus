@@ -36,6 +36,12 @@ export async function initDb() {
   const schema = fs.readFileSync(schemaPath, "utf-8");
   sqlDb.run(schema);
 
+  const columns = sqlDb.exec("PRAGMA table_info(products)");
+  const columnNames = columns[0]?.values.map((row) => row[1]) ?? [];
+  if (!columnNames.includes("condition")) {
+    sqlDb.run("ALTER TABLE products ADD COLUMN condition TEXT");
+  }
+
   persist();
 }
 

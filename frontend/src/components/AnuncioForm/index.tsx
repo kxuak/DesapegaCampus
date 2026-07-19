@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
 import Icon from "../Icon";
 import { CATEGORIES } from "../../data/categories";
+import { getNomeSalvo } from "../../lib/preferences";
 import type { Anuncio } from "../../data/anuncios";
 import "./index.css";
 
@@ -14,6 +15,7 @@ export interface AnuncioFormData {
   preco: string;
   contato: string;
   imagem: string;
+  nome: string;
 }
 
 interface AnuncioFormProps {
@@ -21,11 +23,13 @@ interface AnuncioFormProps {
   onClose: () => void;
   onSubmit: (data: AnuncioFormData) => void;
   anuncioEditando?: Anuncio | null;
+  submitting?: boolean;
+  errorMessage?: string | null;
 }
 
 const CONDICOES = ["Novo", "Seminovo", "Usado"];
 
-const initialState: AnuncioFormData = {
+const criarEstadoInicial = (): AnuncioFormData => ({
   titulo: "",
   descricao: "",
   categoria: CATEGORIES[0].id,
@@ -34,7 +38,8 @@ const initialState: AnuncioFormData = {
   preco: "",
   contato: "",
   imagem: "",
-};
+  nome: getNomeSalvo(),
+});
 
 const paraFormData = (anuncio: Anuncio): AnuncioFormData => ({
   titulo: anuncio.titulo,
@@ -45,15 +50,16 @@ const paraFormData = (anuncio: Anuncio): AnuncioFormData => ({
   preco: anuncio.preco === null ? "" : String(anuncio.preco),
   contato: anuncio.contato ?? "",
   imagem: anuncio.imagem ?? "",
+  nome: anuncio.vendedor ?? getNomeSalvo(),
 });
 
-const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormProps) => {
-  const [form, setForm] = useState<AnuncioFormData>(initialState);
+const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando, submitting, errorMessage }: AnuncioFormProps) => {
+  const [form, setForm] = useState<AnuncioFormData>(criarEstadoInicial);
   const editando = Boolean(anuncioEditando);
 
   useEffect(() => {
     if (!open) return;
-    setForm(anuncioEditando ? paraFormData(anuncioEditando) : initialState);
+    setForm(anuncioEditando ? paraFormData(anuncioEditando) : criarEstadoInicial());
   }, [open, anuncioEditando]);
 
   useEffect(() => {
@@ -73,7 +79,6 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormPr
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSubmit(form);
-    setForm(initialState);
   };
 
   return createPortal(
@@ -90,6 +95,8 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormPr
         </div>
 
         <form className="anuncio-form" onSubmit={handleSubmit}>
+          {errorMessage && <p className="form-erro">{errorMessage}</p>}
+
           <label className="field">
             <span>Título</span>
             <input
@@ -164,6 +171,18 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormPr
           )}
 
           <label className="field">
+            <span>Seu nome</span>
+            <input
+              type="text"
+              placeholder="Como quer ser identificado no anúncio"
+              value={form.nome}
+              onChange={(e) => update("nome", e.target.value)}
+              required
+              minLength={2}
+            />
+          </label>
+
+          <label className="field">
             <span>Contato</span>
             <input
               type="text"
@@ -188,8 +207,12 @@ const AnuncioForm = ({ open, onClose, onSubmit, anuncioEditando }: AnuncioFormPr
           </label>
 
           <div className="modal-actions">
-            <button type="submit" className="btn btn-primary btn-block">{editando ? "Salvar alterações" : "Publicar anúncio"}</button>
-            <button type="button" className="btn btn-outline btn-block" onClick={onClose}>Cancelar</button>
+            <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
+              {submitting ? "Salvando..." : editando ? "Salvar alterações" : "Publicar anúncio"}
+            </button>
+            <button type="button" className="btn btn-outline btn-block" onClick={onClose} disabled={submitting}>
+              Cancelar
+            </button>
           </div>
         </form>
       </div>

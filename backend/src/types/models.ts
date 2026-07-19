@@ -3,6 +3,7 @@ export interface ProductRecord {
   title: string;
   description: string;
   category: string;
+  condition: string | null;
   price: number | null;
   is_donation: 0 | 1;
   image: string | null;

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../../components/Icon";
 import CardCategory from "../../components/CardCategory";
@@ -7,7 +7,8 @@ import CardAnuncio from "../../components/CardAnuncio";
 import CardBeneficio from "../../components/CardBeneficio";
 import CategoryButton from "../../components/CategoryButton";
 import { CATEGORIES } from "../../data/categories";
-import { ANUNCIOS } from "../../data/anuncios";
+import { listProducts, toAnuncio } from "../../lib/api";
+import type { Anuncio } from "../../data/anuncios";
 import "./index.css";
 
 const ESTATISTICAS = [
@@ -25,10 +26,15 @@ const BENEFICIOS = [
 
 const Home = () => {
   const [filtro, setFiltro] = useState("todos");
+  const [vitrine, setVitrine] = useState<Anuncio[]>([]);
+  const [carregando, setCarregando] = useState(true);
 
-  const vitrine = useMemo(() => {
-    const lista = filtro === "todos" ? ANUNCIOS : ANUNCIOS.filter((a) => a.categoria === filtro);
-    return lista.slice(0, 4);
+  useEffect(() => {
+    setCarregando(true);
+    listProducts({ category: filtro === "todos" ? undefined : filtro, limit: 4 })
+      .then((resposta) => setVitrine(resposta.items.map(toAnuncio)))
+      .catch(() => setVitrine([]))
+      .finally(() => setCarregando(false));
   }, [filtro]);
 
   return (
@@ -115,10 +121,11 @@ const Home = () => {
         </div>
 
         <div className="vitrine-grid">
-          {vitrine.map((a) => (
+          {carregando && <p className="vitrine-empty">Carregando anúncios...</p>}
+          {!carregando && vitrine.map((a) => (
             <CardAnuncio key={a.id} anuncio={a} />
           ))}
-          {vitrine.length === 0 && <p className="vitrine-empty">Nenhum anúncio nessa categoria ainda.</p>}
+          {!carregando && vitrine.length === 0 && <p className="vitrine-empty">Nenhum anúncio nessa categoria ainda.</p>}
         </div>
 
         <div className="vitrine-cta">

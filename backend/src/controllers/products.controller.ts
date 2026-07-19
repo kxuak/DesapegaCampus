@@ -5,6 +5,7 @@ import {
   createProductSchema,
   deleteProductSchema,
   listProductsQuerySchema,
+  updateProductSchema,
 } from "../types/products.schema";
 
 export async function create(req: Request, res: Response) {
@@ -31,6 +32,12 @@ export async function listMine(req: Request, res: Response) {
   }
   const products = productsService.listMyProducts(ownerId);
   return res.status(200).json(products);
+}
+
+export async function update(req: Request, res: Response) {
+  const data = updateProductSchema.parse(req.body);
+  const product = productsService.updateProduct(req.params.id, data);
+  return res.status(200).json(product);
 }
 
 export async function remove(req: Request, res: Response) {

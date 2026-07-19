@@ -65,6 +65,16 @@
   gap: 16px;
 }
 
+.form-erro {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+}
+
 .field {
   display: flex;
   flex-direction: column;
