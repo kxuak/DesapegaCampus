@@ -59,5 +59,8 @@ https://claude.ai/share/a2bdc5f4-e625-496f-9353-dc6e0b664370
 4. Durante a configuração do PWA, a IA sugeriu registrar manualmente o Service Worker usando o virtual:pwa-register. Ao aplicar a solução, comecei a receber erros de importação e tipagem. Para entender o problema, consultei a documentação do vite-plugin-pwa, comparei com exemplos da comunidade e fiz alguns testes. Percebi que aquela configuração não era necessária para o meu caso e que o plugin já cuidava disso automaticamente. Depois de fornecer mais contexto sobre meu projeto e validar as respostas com a documentação, consegui chegar à configuração correta. Essa situação mostrou a importância de testar e verificar as sugestões da IA antes de aplicá-las diretamente.
 
 # Links:
-Aplicação: https://desapega-campus.vercel.app/
+Deploys: 
+frontend: https://desapega-campus.vercel.app/
+backend: https://desapegacampus.onrender.com
+
 Repositório: https://github.com/kxuak/DesapegaCampus
