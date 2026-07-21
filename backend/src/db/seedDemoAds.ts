@@ -1,18 +1,4 @@
-/**
- * Popula o banco com anúncios de demonstração (simulando itens publicados
- * por outros usuários), pra Home e a página "Explorar anúncios" nunca
- * ficarem vazias.
- *
- * Usa um owner_id fixo e reconhecível (SEED_OWNER_ID) para que:
- *  - esses itens nunca apareçam em "Meus anúncios" de um usuário real
- *    (o ownerId real é gerado via crypto.randomUUID() no navegador);
- *  - seja fácil identificá-los/removê-los depois, se quiser.
- *
- * É chamada automaticamente no boot do servidor (src/server.ts), então
- * funciona em produção (Render) mesmo sem disco persistente — se o banco
- * reiniciar vazio, ela repõe os itens sozinha. É seguro rodar toda vez:
- * verifica se cada item (pelo id fixo) já existe antes de inserir.
- */
+
 import * as db from "./index";
 
 const SEED_OWNER_ID = "00000000-seed-demo-ads-000000000000";

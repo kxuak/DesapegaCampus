@@ -21,7 +21,7 @@ const ESTATISTICAS = [
 const BENEFICIOS = [
   { icon: "/recycle.svg", titulo: "Economia circular", descricao: "Dê uma nova vida a materiais acadêmicos que não serão mais usados." },
   { icon: "/handshake.svg", titulo: "Doe ou venda", descricao: "Anuncie gratuitamente — escolha doar ou definir um preço justo." },
-  { icon: "/search.svg", titulo: "Economia circular", descricao: "Negocie com estudantes da sua própria universidade." },
+  { icon: "/search.svg", titulo: "Network", descricao: "Negocie com estudantes da sua própria universidade." },
 ];
 
 const Home = () => {
